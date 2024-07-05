@@ -58,7 +58,7 @@ jobs:
     - name: Create Docker daemon.json
       run: |
         echo '{
-          "insecure-registries": ["192.168.174.224:8801"]
+          "insecure-registries": ["122.51.89.249:8801"]
         }' > daemon.json
 
     - name: Copy daemon.json
