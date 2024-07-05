@@ -59,8 +59,14 @@ jobs:
       run: |
         echo '{
           "insecure-registries": ["192.168.174.224:8801"]
-        }' > ${{ runner.temp }}/daemon.json
-    
+        }' > daemon.json
+
+    - name: Copy daemon.json
+      run: sudo cp daemon.json /etc/docker/daemon.json
+
+    - name: Restart docker2
+      run: sudo service docker restart
+  
     - name: Build and push image Aliyun
       run: |
         #DOCKER_DAEMON_JSON='{"insecure-registries": [ "122.51.89.249:8801"]}'
@@ -72,7 +78,7 @@ jobs:
         #echo $ALIYUN_REGISTRY_PASSWORD | docker login --username $ALIYUN_REGISTRY_USER --password-stdin $ALIYUN_REGISTRY
         docker info
         docker login --help
-        docker login --config-file ${{ runner.temp }}/daemon.json -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
+        docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
         # 数据预处理,判断镜像是否重名
         declare -A duplicate_images
         declare -A temp_map
