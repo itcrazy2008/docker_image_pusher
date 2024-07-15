@@ -1,1 +1,1 @@
-kube-scheduler:v1.24.3
+busyboz:latest
